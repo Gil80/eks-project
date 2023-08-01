@@ -1,6 +1,6 @@
 FROM python:alpine
 ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python3 && ln -sf python3 /user/bin/python
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
 RUN python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools
 
@@ -9,7 +9,7 @@ RUN pip3 install --no-cache --upgrade pip setuptools
 
 RUN python3 -m venv /home/gil/venve
 ENV VIRTUAL_ENV=/home/gil/venve
-ENV PATH="home/gil/venve/bin:$PATH"
+ENV PATH="/home/gil/venve/bin:$PATH"
 RUN source /home/gil/venve/bin/activate
 
 # create user without password
