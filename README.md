@@ -1,3 +1,6 @@
+## Description
+This project runs a flask app that prints the IP address of the container its running on, and an Nginx webserver that acts as a round-robin load balancer.
+
 1. run the app.py locally to validate it running and exposing IP address of the flask server on port 5000. Make sure you have flask module installed.
 2. build a container from the dockerfile using `docker build -t flask .` 
 3. run the container using `docker run -it -u gil -p 5000:5000 flask bash`
