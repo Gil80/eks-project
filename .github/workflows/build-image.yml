@@ -14,7 +14,7 @@ jobs:
     
     steps: 
     - name: Checkout
-      uses: actions/checkout@v3.2.0
+      uses: actions/checkout@v3
     
     - name: Set outputs
       id: vars
@@ -39,7 +39,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: gils-repo
-        IMAGE_TAG: ${{ env.sha_short }}
+        IMAGE_TAG: $GITHUB_OUTPUT
       run: |
         # Build a docker container and
         # push it to ECR so that it can
