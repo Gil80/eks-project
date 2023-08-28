@@ -39,7 +39,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: gils-repo
-        IMAGE_TAG: $GITHUB_OUTPUT
+        IMAGE_TAG: ${{ steps.vars.sha_short }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
