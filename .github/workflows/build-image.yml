@@ -46,7 +46,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: gils-repo
-        IMAGE_TAG: "${{ steps.extract_sha.outputs.commit_sha }}"
+        IMAGE_TAG: "${{ steps.extract_sha.outputs.SHORT_SHA }}"
       run: |
         # Build a docker container and
         # push it to ECR so that it can
