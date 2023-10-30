@@ -16,4 +16,8 @@ The `docker-compose.yml` is configured to run three instances (containers) of th
 3. Once the environment is up and running, browse to `http://localhost:9090` and you should see the IP address of one of the containers running an instance of flask.
 4. Press F5 to see how the round-robin LB directs the request to a different IP/container.
 
+## Cleaning the environment
+1. Press CTRL+C to stop the containers
+2. run `docker compose down` to remove the containers
+
 
