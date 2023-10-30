@@ -28,8 +28,8 @@ jobs:
     - name: store AWS creds
       id: aws_creds
       run: |
-        echo "AWS_ACCESS_KEY_ID = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_OUTPUT
-        echo "AWS_SECRET_ACCESS_KEY = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >>$GITHUB_OUTPUT
+        echo "AWS_ACCESS_KEY_ID=$(secrets.AWS_ACCESS_KEY_ID)" >> $GITHUB_OUTPUT
+        echo "AWS_SECRET_ACCESS_KEY=$(secrets.AWS_SECRET_ACCESS_KEY)" >>$GITHUB_OUTPUT
     
     - name: Configure AWS creds
       uses: aws-actions/configure-aws-credentials@v1
