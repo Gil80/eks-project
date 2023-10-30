@@ -18,13 +18,17 @@ jobs:
     
     - name: Extract short SHA of the last commit
       id: extract_sha
-      run: |
-        short_sha=$(git rev-parse --short HEAD)
-        echo "Short SHA: $short_sha"
-        echo "::set-output name=commit_sha::$short_sha"
+      run: echo "{short_sha} = {$(git rev-parse --short HEAD)}" >> $GITHUB_OUTPUT
+       #  |
+       # short_sha=$(git rev-parse --short HEAD)
+       # echo "Short SHA: $short_sha"
+       # echo "::set-output name=commit_sha::$short_sha"
     - name: Check outputs
+      env:
+        short_sha: ${{steps.extract_sha.outputs.short_sha}}
       run: |
-        echo "Commit SHA: ${{ steps.extract_sha.outputs.commit_sha }}"
+        echo "Commit SHA: $short_sha"
+        #echo "Commit SHA: ${{ steps.extract_sha.outputs.commit_sha }}"
     
     - name: Configure AWS creds
       uses: aws-actions/configure-aws-credentials@v1
