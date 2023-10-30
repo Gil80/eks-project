@@ -18,10 +18,13 @@ jobs:
     
     - name: Extract short SHA of the last commit
       id: extract_sha
-      run: echo "::set-output name=commit_sha::$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-      #run: echo "{sha_short} = {$(git rev-parse --short HEAD)}" >> $GITHUB_OUTPUT
+      run: |
+        short_sha=$(git rev-parse --short HEAD)
+        echo "Short SHA: $short_sha"
+        echo "::set-output name=commit_sha::$short_sha"
     - name: Check outputs
-      run: echo "$GITHUB_OUTPUT"
+      run: |
+        echo "Commit SHA: ${{ steps.extract_sha.outputs.commit_sha }}"
     
     - name: Configure AWS creds
       uses: aws-actions/configure-aws-credentials@v1
@@ -39,7 +42,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: gils-repo
-        IMAGE_TAG: ${{ steps.vars.sha_short }}
+        IMAGE_TAG: "${{ steps.extract_sha.outputs.commit_sha }}"
       run: |
         # Build a docker container and
         # push it to ECR so that it can
