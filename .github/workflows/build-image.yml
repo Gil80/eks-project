@@ -36,7 +36,8 @@ jobs:
         
     - name: Login to Amazon ECR
       id: login-ecr
-      uses: docker/login-action@v3
+      uses: aws-actions/amazon-ecr-login@v2
+      #uses: docker/login-action@v3
       #with:
       #  registry: 098945065860.dkr.ecr.il-central-1.amazonaws.com
 
@@ -45,13 +46,13 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: my_repo
-        IMAGE_TAG: "${{ steps.extract_sha.outputs.short_sha }}"
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        REPOSITORY: my_repo
+        IMAGE_TAG: ${{ steps.extract_sha.outputs.short_sha }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        echo "{image} = {$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG}"
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG        
+        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+        echo "{image} = {$REGISTRY/$REPOSITORY:$IMAGE_TAG}"
+        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG        
 
 
     
