@@ -29,6 +29,10 @@ jobs:
     - name: Get git tab
       id: get_tag
       uses: little-core-labs/get-git-tag@v3.0.1
+      with:
+        tagname: ${{ steps.get_tag_outputs.tag }}
+        run: |
+          echo "$TAGNAME"
       
     - name: Configure AWS creds
       uses: aws-actions/configure-aws-credentials@v4
