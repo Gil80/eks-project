@@ -35,20 +35,17 @@ jobs:
         aws-region: il-central-1
         
     - name: Login to Amazon ECR
-      id: login_ecr
+      id: login-ecr
       uses: docker/login-action@v3
-      with:
-        registry: 098945065860.dkr.ecr.il-central-1.amazonaws.com
+      #with:
+      #  registry: 098945065860.dkr.ecr.il-central-1.amazonaws.com
 
       #uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        run: |
-          echo "ECR_REGISTRY=$(steps.login_ecr.outputs.registry)" >> $GITHUB_OUTPUT
-          echo "ECR_REGISTRY: $ECR_REGISTRY"
-        ECR_REGISTRY: "${{ steps.login_ecr.outputs.registry }}"
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: my_repo
         IMAGE_TAG: "${{ steps.extract_sha.outputs.short_sha }}"
       run: |
