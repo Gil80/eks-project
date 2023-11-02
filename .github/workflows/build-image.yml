@@ -46,7 +46,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: my_repo
-        IMAGE_TAG: "${{ steps.extract_sha.outputs.$SHORT_SHA }}"
+        IMAGE_TAG: "${{ steps.extract_sha.outputs.short_sha }}"
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         echo "{image} = {$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG}"
