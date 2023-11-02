@@ -25,14 +25,6 @@ jobs:
         SHORT_SHA: ${{steps.extract_sha.outputs.SHORT_SHA}}
       run: |
         echo "Commit SHA: $SHORT_SHA"
-
-    - name: Get git tab
-      id: get_tag
-      uses: little-core-labs/get-git-tag@v3.0.1
-      with:
-        tagname: ${{ steps.get_tag_outputs.tag }}
-        run: |
-          echo "$TAGNAME"
       
     - name: Configure AWS creds
       uses: aws-actions/configure-aws-credentials@v4
@@ -53,12 +45,9 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: gils-repo
-        IMAGE_TAG: "${{ steps.get_tag.outputs.tag }}"
+        ECR_REPOSITORY: my_repo
+        IMAGE_TAG: "${{ steps.extract_sha.outputs.$SHORT_SHA }}"
       run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         echo "{image} = {$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG}"
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG        
