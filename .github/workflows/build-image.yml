@@ -41,7 +41,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: gils-repo
+        ECR_REPOSITORY: loadbalancer-demo
         IMAGE_TAG: "${{ steps.extract_sha.outputs.SHORT_SHA }}"
       run: |
         # Build a docker container and
